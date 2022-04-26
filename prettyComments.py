@@ -12,7 +12,8 @@
 # word wrap. The comment you are reading right now was written by prettyComments! (Most of it anyway. The indented part
 # and blank lines I did manually.)
 #
-# <language> is a string representing the language of your choice (see comment_markers). 
+# <language> is a string representing the language of your choice (see comment_markers). It is optional. By default
+# this module writes C-style comments.
 #
 # Anything you type before the word "endtitle" will be centered. Hopefully this part is self explanatory. 
 #
@@ -25,7 +26,7 @@ LINE_MARGIN = 10
 TITLE_END = "endtitle"
 DEFAULT_LANGUAGE = "c"
 
-
+# Choose your language by optionally passing in one of these keys from command line:
 comment_markers = {
     "bash": "#",
     "c": "//",
@@ -55,7 +56,13 @@ def main():
     else:
         comment_marker = comment_markers[DEFAULT_LANGUAGE]
         argv_start_num = 1
-        
+
+    # If the user has entered the endtitle keyword, put an extra line above and below the comment body:
+    if TITLE_END in sys.argv:
+        add_pad_lines = True
+    else:
+        add_pad_lines = False
+
     num_dashes = LINE_LENGTH - len(comment_marker)
     demarcation = comment_marker + ('-' * num_dashes)
     
@@ -89,11 +96,14 @@ def main():
     if len(title) > 0:
         y.append(comment_marker + centerStr(title))
     
+    if add_pad_lines:
+        y.append(comment_marker)
+
     if len(s.split()) > 0:
         # If s is just a space, don't append a new line for that.
         y.append(comment_marker + s)
     
-    if linesWritten > 0:
+    if add_pad_lines:
         y.append(comment_marker)
         
     y.append(demarcation)
