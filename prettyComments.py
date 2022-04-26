@@ -30,6 +30,7 @@ DEFAULT_LANGUAGE = "c"
 comment_markers = {
     "bash": "#",
     "c": "//",
+    "clj": ";;",
     "cpp": "//",
     "c++": "//",
     "hs": "--",
