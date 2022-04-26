@@ -97,9 +97,6 @@ def main():
     if len(title) > 0:
         y.append(comment_marker + centerStr(title))
     
-    if add_pad_lines:
-        y.append(comment_marker)
-
     if len(s.split()) > 0:
         # If s is just a space, don't append a new line for that.
         y.append(comment_marker + s)
